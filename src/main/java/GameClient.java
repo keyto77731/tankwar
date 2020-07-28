@@ -1,6 +1,17 @@
-public class GameClient {
+import javax.swing.*;
+import java.awt.*;
 
-    public static void main(String[] args) {
-        System.out.println("TankWar!");
+public class GameClient extends JComponent {
+    private int screenWidth;
+    private int screenHeight;
+
+    GameClient(){
+        this(1024,768);
+    }
+
+    public GameClient(int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
     }
 }
