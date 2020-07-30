@@ -49,19 +49,19 @@ public class GameClient extends JComponent {
         switch (e.getKeyCode()){
             case KeyEvent.VK_UP:
                 playerTank.setDirection(Direction.UP);
-                playerTank.setY(playerTank.getY()-5);
+                playerTank.setY(playerTank.getY()-playerTank.getSpeed());
                 break;
             case KeyEvent.VK_DOWN:
                 playerTank.setDirection(Direction.DOWN);
-                playerTank.setY(playerTank.getY()+5);
+                playerTank.setY(playerTank.getY()+playerTank.getSpeed());
                 break;
             case KeyEvent.VK_LEFT:
                 playerTank.setDirection(Direction.LEFT);
-                playerTank.setX(playerTank.getX()-5);
+                playerTank.setX(playerTank.getX()-playerTank.getSpeed());
                 break;
             case KeyEvent.VK_RIGHT:
                 playerTank.setDirection(Direction.RIGHT);
-                playerTank.setX(playerTank.getX()+5);
+                playerTank.setX(playerTank.getX()+playerTank.getSpeed());
                 break;
             default:
         }

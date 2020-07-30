@@ -7,6 +7,7 @@ public class Tank {
     private int speed;
     private Direction direction;
 
+
     public Tank(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
@@ -36,6 +37,14 @@ public class Tank {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public void move(){
@@ -89,6 +98,7 @@ public class Tank {
             return new ImageIcon("assets/images/itankRD.png").getImage();
         return null;
     }
+
 
 
 }
