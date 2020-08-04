@@ -3,24 +3,28 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class GameClient extends JComponent {
+    //遊戲畫面的寬跟長
     private int screenWidth;
     private int screenHeight;
-
+    //玩家坦克
     private Tank playerTank;
+
     private boolean stop;
-    GameClient(){
-        this(1024,768);
+
+    //預設遊戲畫面
+    GameClient() {
+        this(800, 600);
     }
 
     public GameClient(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 
         init();
 
-        new Thread(()->{
-            while (!stop){
+        new Thread(() -> {
+            while (!stop) {
                 repaint();
                 try {
                     Thread.sleep(50);
@@ -31,40 +35,59 @@ public class GameClient extends JComponent {
         }).start();
     }
 
-    public void init(){
-        playerTank=new Tank(400,100,Direction.DOWN);
+    public void init() {
+        playerTank = new Tank(400, 100, Direction.DOWN);
     }
+
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+
     @Override
-    public void paintComponent(Graphics g){
-        g.drawImage(playerTank.getImage(),
-                playerTank.getX(),playerTank.getY(),null);
+    public void paintComponent(Graphics g) {
+        playerTank.draw(g);
     }
-    private int getCenterPosY(int height){
-        return (screenHeight-height)/2;
-    }
-    private int getCenterPosX(int width){
-        return (screenWidth-width)/2;
-    }
-    public void keyPressed(KeyEvent e){
-        switch (e.getKeyCode()){
+
+    public void keyPressed(KeyEvent e) {
+        boolean[] dirs = playerTank.getDirs();
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                playerTank.setDirection(Direction.UP);
-                playerTank.setY(playerTank.getY()-playerTank.getSpeed());
+                dirs[0] = true;
                 break;
             case KeyEvent.VK_DOWN:
-                playerTank.setDirection(Direction.DOWN);
-                playerTank.setY(playerTank.getY()+playerTank.getSpeed());
+                dirs[1] = true;
                 break;
             case KeyEvent.VK_LEFT:
-                playerTank.setDirection(Direction.LEFT);
-                playerTank.setX(playerTank.getX()-playerTank.getSpeed());
+                dirs[2] = true;
                 break;
             case KeyEvent.VK_RIGHT:
-                playerTank.setDirection(Direction.RIGHT);
-                playerTank.setX(playerTank.getX()+playerTank.getSpeed());
+                dirs[3] = true;
                 break;
-            default:
         }
-
     }
+
+    public void keyReleased(KeyEvent e) {
+        boolean[] dirs = playerTank.getDirs();
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                dirs[0] = false;
+                break;
+            case KeyEvent.VK_DOWN:
+                dirs[1] = false;
+                break;
+            case KeyEvent.VK_LEFT:
+                dirs[2] = false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                dirs[3] = false;
+                break;
+        }
+    }
+
 }
