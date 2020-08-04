@@ -40,13 +40,14 @@ public class GameClient extends JComponent {
     }
 
     public void init() {
-        playerTank = new Tank(400, 100, Direction.DOWN);
+        playerTank = new Tank(500, 100, Direction.DOWN);
         for(int i=0;i<3;i++)
             for(int j=0;j<4;j++)
-                enemyTank.add(new Tank(300+j*80,500+i*80,Direction.UP,true));
-        walls.add(new Wall(250,150,15,true));
-        walls.add(new Wall(150,200,15,false));
-        walls.add(new Wall(800,200,15,false));
+                enemyTank.add(new Tank(370+j*80,500+i*80,Direction.UP,true));
+        Image image=Tools.getImage("brick.png");
+        walls.add(new Wall(270,150,15,true,image));
+        walls.add(new Wall(150,200,15,false,image));
+        walls.add(new Wall(800,200,15,false,image));
     }
 
 //老師做的↓
