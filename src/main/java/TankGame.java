@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /***
- * ä¸»éŠæˆ²é¡åˆ¥
+ * ¥D¹CÀ¸Ãş§O
  */
 public class TankGame {
 
@@ -12,11 +12,11 @@ public class TankGame {
         JFrame frame = new JFrame();
 
         GameClient gameClient = new GameClient(1024, 768);
-        frame.setTitle("å¦å…‹å¤§æˆ°!");
+        frame.setTitle("©Z§J¤j¾Ô!");
         frame.setResizable(false);
         frame.add(gameClient);
         frame.pack();
-        //ç½®ä¸­é¡¯ç¤º
+        //¸m¤¤Åã¥Ü
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
