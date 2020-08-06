@@ -1,28 +1,21 @@
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /***
- * •DπC¿∏√˛ßO
+ * Âù¶ÂÖãÂ§ßÊà∞‰∏ªÁ®ãÂºè
  */
 public class TankGame {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-
         GameClient gameClient = new GameClient(1024, 768);
-        frame.setTitle("©ZßJ§jæ‘!");
-        frame.setResizable(false);
         frame.add(gameClient);
-        frame.pack();
-        //∏m§§≈„•‹
-        frame.setLocationRelativeTo(null);
+        frame.setTitle("TankWar");
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        gameClient.repaint();
 
         frame.addKeyListener(new KeyAdapter() {
             @Override
