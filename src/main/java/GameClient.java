@@ -11,12 +11,16 @@ public class GameClient extends JComponent {
 
     private Tank playerTank;
 
-    private List<GameObject> gameObjects=new ArrayList<>();
+    private List<GameObject> gameObjects = new ArrayList<>();
 
     private boolean stop;
 
     GameClient() {
         this(1024, 768);
+    }
+
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
     }
 
     public GameClient(int screenWidth, int screenHeight) {
@@ -40,25 +44,25 @@ public class GameClient extends JComponent {
 
     public void init() {
 
-        Image[] iTankImg=new Image[8];
-        Image[] eTankImg=new Image[8];
+        Image[] iTankImg = new Image[8];
+        Image[] eTankImg = new Image[8];
         Image[] brickImage = {Tools.getImage("brick.png")};
 
 
-        String[] subName={"U.png","D.png","L.png","R.png","LU.png","RU.png","LD.png","RD.png"};
+        String[] subName = {"U.png", "D.png", "L.png", "R.png", "LU.png", "RU.png", "LD.png", "RD.png"};
 
-        for(int i=0;i<iTankImg.length;i++){
-            iTankImg[i]=Tools.getImage("itank"+subName[i]);
-            eTankImg[i]=Tools.getImage("etank"+subName[i]);
+        for (int i = 0; i < iTankImg.length; i++) {
+            iTankImg[i] = Tools.getImage("itank" + subName[i]);
+            eTankImg[i] = Tools.getImage("etank" + subName[i]);
         }
 
-        playerTank = new Tank(getCenterPosX(47), 100, Direction.DOWN,iTankImg);
+        playerTank = new Tank(getCenterPosX(47), 100, Direction.DOWN, iTankImg);
 
         gameObjects.add(playerTank);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                gameObjects.add(new Tank(350 + j * 80, 500 + i * 80, Direction.UP, true,eTankImg));
+                gameObjects.add(new Tank(300 + j * 120, 400 + i * 120, Direction.UP, true, eTankImg));
             }
         }
 
@@ -68,10 +72,11 @@ public class GameClient extends JComponent {
 
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
 
-        for(GameObject object:gameObjects){
+        for (GameObject object : gameObjects) {
             object.draw(g);
         }
     }

@@ -14,17 +14,17 @@ public class Tank extends GameObject {
     private boolean enemy;
 
 
-    public Tank(int x, int y, Direction direction,Image[] image) {
-        this(x, y, direction, false,image);
+    public Tank(int x, int y, Direction direction, Image[] image) {
+        this(x, y, direction, false, image);
     }
 
-    public Tank(int x, int y, Direction direction, boolean enemy,Image[] image) {
-        super(x,y,image);
+    public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
+        super(x, y, image);
         this.x = x;
         this.y = y;
         this.direction = direction;
         this.enemy = enemy;
-        speed = 5;
+        speed = 10;
     }
 
     public int getX() {
@@ -60,6 +60,8 @@ public class Tank extends GameObject {
     }
 
     public void move() {
+        oldX = x;
+        oldY = y;
         switch (direction) {
             case UP:
                 y -= speed;
@@ -92,6 +94,29 @@ public class Tank extends GameObject {
         }
     }
 
+    public void collision() {
+        if (x < 0) {
+            x = 0;
+        } else if (x > TankGame.gameClient.getWidth() - width) {
+            x = TankGame.gameClient.getWidth() - width;
+        }
+        if (y < 0) {
+            y = 0;
+        } else if (y > TankGame.gameClient.getHeight() - height) {
+            y = TankGame.gameClient.getHeight() - height;
+        }
+
+        for (GameObject object : TankGame.gameClient.getGameObjects())
+            if (object != this) {
+                if (object.getRectangle().intersects(this.getRectangle())) {
+                    x = oldX;
+                    y = oldY;
+                    return;
+                }
+            }
+    }
+
+
     private void determineDirection() {
         //0:¤W 1:¤U 2:¥ª 3:¥k
         if (dirs[0] && !dirs[1] && !dirs[2] && !dirs[3]) {
@@ -114,12 +139,11 @@ public class Tank extends GameObject {
     }
 
 
-
-
     public void draw(Graphics g) {
         if (!isStop()) {
             determineDirection();
             move();
+            collision();
         }
 
         g.drawImage(image[direction.ordinal()], x, y, null);
