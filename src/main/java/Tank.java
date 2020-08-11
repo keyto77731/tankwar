@@ -1,17 +1,15 @@
-import javax.swing.*;
 import java.awt.*;
 
 /***
  * 坦克物件
  */
 
-public class Tank extends GameObject {
+public class Tank extends MoveObject {
 
-    private int speed;
-    private Direction direction;
+
     //上下左右
-    private boolean[] dirs = new boolean[4];
-    private boolean enemy;
+    protected boolean[] dirs = new boolean[4];
+
 
 
     public Tank(int x, int y, Direction direction, Image[] image) {
@@ -19,7 +17,7 @@ public class Tank extends GameObject {
     }
 
     public Tank(int x, int y, Direction direction, boolean enemy, Image[] image) {
-        super(x, y, image);
+        super(x, y,  direction,  enemy,  image);
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -27,84 +25,13 @@ public class Tank extends GameObject {
         speed = 10;
     }
 
-    public int getX() {
-        return x;
-    }
 
-    public void setX(int x) {
-        this.x = x;
-    }
 
-    public int getY() {
-        return y;
-    }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void move() {
-        oldX = x;
-        oldY = y;
-        switch (direction) {
-            case UP:
-                y -= speed;
-                break;
-            case DOWN:
-                y += speed;
-                break;
-            case LEFT:
-                x -= speed;
-                break;
-            case RIGHT:
-                x += speed;
-                break;
-            case UP_LEFT:
-                y -= speed;
-                x -= speed;
-                break;
-            case UP_RIGHT:
-                y -= speed;
-                x += speed;
-                break;
-            case DOWN_LEFT:
-                x -= speed;
-                y += speed;
-                break;
-            case DOWN_RIGHT:
-                x += speed;
-                y += speed;
-                break;
-        }
-    }
 
     public void collision() {
-        if (x < 0) {
-            x = 0;
-        } else if (x > TankGame.gameClient.getWidth() - width) {
-            x = TankGame.gameClient.getWidth() - width;
-        }
-        if (y < 0) {
-            y = 0;
-        } else if (y > TankGame.gameClient.getHeight() - height) {
-            y = TankGame.gameClient.getHeight() - height;
-        }
+        collisionBound();
 
         for (GameObject object : TankGame.gameClient.getGameObjects())
             if (object != this) {
@@ -160,5 +87,9 @@ public class Tank extends GameObject {
 
     public boolean[] getDirs() {
         return dirs;
+    }
+    public void fire(){
+        TankGame.gameClient.addGameObject(new Bullet(x,y,direction,enemy,TankGame.gameClient.bulletImg));
+
     }
 }

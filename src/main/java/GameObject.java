@@ -9,7 +9,7 @@ public abstract class GameObject {
     protected int height;
     protected int oldX;
     protected int oldY;
-
+    protected boolean alive;
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
     }
@@ -19,6 +19,7 @@ public abstract class GameObject {
         this.x = x;
         this.y = y;
         this.image = image;
+        this.alive=true;
         width = image[0].getWidth(null);
         height = image[0].getHeight(null);
     }

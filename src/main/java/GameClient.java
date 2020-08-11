@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameClient extends JComponent {
@@ -14,6 +15,7 @@ public class GameClient extends JComponent {
     private List<GameObject> gameObjects = new ArrayList<>();
 
     private boolean stop;
+    public static Image[] bulletImg = new Image[8];
 
     GameClient() {
         this(1024, 768);
@@ -21,6 +23,9 @@ public class GameClient extends JComponent {
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
+    }
+    public void addGameObject(GameObject object){
+        gameObjects.add(object);
     }
 
     public GameClient(int screenWidth, int screenHeight) {
@@ -54,6 +59,7 @@ public class GameClient extends JComponent {
         for (int i = 0; i < iTankImg.length; i++) {
             iTankImg[i] = Tools.getImage("itank" + subName[i]);
             eTankImg[i] = Tools.getImage("etank" + subName[i]);
+            bulletImg[i] = Tools.getImage("missile" + subName[i]);
         }
 
         playerTank = new Tank(getCenterPosX(47), 100, Direction.DOWN, iTankImg);
@@ -75,9 +81,17 @@ public class GameClient extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,getWidth(),getHeight());
 
         for (GameObject object : gameObjects) {
             object.draw(g);
+        }
+        Iterator<GameObject>iterator=gameObjects.iterator();
+        while (iterator.hasNext()){
+            if(!(iterator.next()).alive){
+                iterator.remove();
+            }
         }
     }
 
@@ -108,7 +122,9 @@ public class GameClient extends JComponent {
             case KeyEvent.VK_RIGHT:
                 dirs[3] = true;
                 break;
-
+            case KeyEvent.VK_CONTROL:
+                playerTank.fire();
+                break;
             default:
         }
     }
