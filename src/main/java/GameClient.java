@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameClient extends JComponent {
 
@@ -12,11 +13,11 @@ public class GameClient extends JComponent {
 
     private Tank playerTank;
 
-    private List<GameObject> gameObjects = new ArrayList<>();
+    private CopyOnWriteArrayList<GameObject> gameObjects = new CopyOnWriteArrayList<>();
 
     private boolean stop;
     public static Image[] bulletImg = new Image[8];
-
+    public static Image[] explosionImg = new Image[11];
     GameClient() {
         this(1024, 768);
     }
@@ -61,6 +62,8 @@ public class GameClient extends JComponent {
             eTankImg[i] = Tools.getImage("etank" + subName[i]);
             bulletImg[i] = Tools.getImage("missile" + subName[i]);
         }
+        for (int i = 0; i < explosionImg.length; i++)
+        explosionImg[i] = Tools.getImage(i+".png");
 
         playerTank = new Tank(getCenterPosX(47), 100, Direction.DOWN, iTankImg);
 
@@ -87,11 +90,9 @@ public class GameClient extends JComponent {
         for (GameObject object : gameObjects) {
             object.draw(g);
         }
-        Iterator<GameObject>iterator=gameObjects.iterator();
-        while (iterator.hasNext()){
-            if(!(iterator.next()).alive){
-                iterator.remove();
-            }
+        for (GameObject object : gameObjects) {
+            if(!object.alive)
+            gameObjects.remove(object);
         }
     }
 
@@ -125,9 +126,17 @@ public class GameClient extends JComponent {
             case KeyEvent.VK_CONTROL:
                 playerTank.fire();
                 break;
+//            case KeyEvent.VK_A:
+//                playerTank.superFire();
+//                break;
+
             default:
         }
     }
+
+
+
+
 
     public void keyReleased(KeyEvent e) {
         boolean[] dirs = playerTank.getDirs();

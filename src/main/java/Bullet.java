@@ -9,17 +9,17 @@ public class Bullet extends MoveObject {
 
 
 
-    public void collision() {
+    public boolean collision() {
         if (collisionBound()) {
             alive = false;
-            return;
+            return true;
         }
 
 
 
 
         for (GameObject object : TankGame.gameClient.getGameObjects()) {
-            if (object != this) {
+            if (!(object instanceof Bullet ) ){
 
 
                 if (object instanceof Tank) {
@@ -28,14 +28,16 @@ public class Bullet extends MoveObject {
                     }
                 }
                 if (object.getRectangle().intersects(this.getRectangle())) {
+                    TankGame.gameClient.addGameObject(new Explosion(x,y,GameClient.explosionImg));
                     alive = false;
                     if (object instanceof Tank) {
                         object.alive = false;
                     }
 
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 }

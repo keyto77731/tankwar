@@ -10,6 +10,7 @@ public abstract class GameObject {
     protected int oldX;
     protected int oldY;
     protected boolean alive;
+    protected int frame;
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
     }

@@ -30,7 +30,7 @@ public class Tank extends MoveObject {
 
 
 
-    public void collision() {
+    public boolean collision() {
         collisionBound();
 
         for (GameObject object : TankGame.gameClient.getGameObjects())
@@ -38,9 +38,10 @@ public class Tank extends MoveObject {
                 if (object.getRectangle().intersects(this.getRectangle())) {
                     x = oldX;
                     y = oldY;
-                    return;
+                    return true;
                 }
             }
+        return false;
     }
 
 
